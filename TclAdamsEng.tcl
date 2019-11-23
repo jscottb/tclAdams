@@ -38,24 +38,24 @@ if 0 {
     }      
  }
 
-	# Read in all chars from a file, between two '"'
-	# Note: This is a quick hack at it, feel free to replace :-)
-	proc ReadQuotedMsg {fd {option ""}} {
-		set msg_buff {}
-		set QuoteCnt 0
+ # Read in all chars from a file, between two '"'
+ # Note: This is a quick hack at it, feel free to replace :-)
+ proc ReadQuotedMsg {fd {option ""}} {
+    set msg_buff {}
+    set QuoteCnt 0
 
-		while {[set char [read $fd 1]] != {}} {
-			if {$char == "\"" && [incr QuoteCnt] > 1} {
-				# Throw away the end of line
-				if {$option == "-endofline"} { gets $fd }
-				break   
-			} elseif {$QuoteCnt > 0} {
-			
-				append msg_buff $char         
-			}
-		}
-		return $msg_buff
+    while {[set char [read $fd 1]] != {}} {
+	if {$char == "\"" && [incr QuoteCnt] > 1} {
+		# Throw away the end of line
+		if {$option == "-endofline"} { gets $fd }
+		break   
+	} elseif {$QuoteCnt > 0} {
+
+		append msg_buff $char         
 	}
+    }
+    return $msg_buff
+ }
 
  proc CountCarriedInv {strGameInfo} {
     upvar $strGameInfo GameInfo
